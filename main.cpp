@@ -217,9 +217,8 @@ void opcontrol() {
         lift.move(0)
         }
     }
-    if (Controller1.Axis3.position() > 0) {
-    Drivetrain.drive(position());
-    }
+    Drivetrain.drive(Controller1.Axis3.position());
+    Drivetrain.turn(Controller1.Axis4.position());
     }
    }
   pros::delay(ez::util::DELAY_TIME); // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
