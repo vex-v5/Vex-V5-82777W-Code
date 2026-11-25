@@ -10,6 +10,11 @@ pros::MotorGroup lift({9, -16});
 pros::Motor clawIntakeLeft(-4);
 pros::Motor clawIntakeRight(15);
 pros::MotorGroup clawIntake({-4, 15});
+pros::Motor backLeft(1);
+pros::Motor frontLeft(14);
+pros::Motor backRight(7);
+pros::Motor frontRight(10);
+
 pros::Controller master(pros::E_CONTROLLER_MASTER);
 
 // Chassis constructor
