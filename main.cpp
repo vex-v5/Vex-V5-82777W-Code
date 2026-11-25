@@ -167,7 +167,7 @@ void autonomous() {
 void opcontrol() {
   // This is preference to what you like to drive on.
   chassis.set_drive_brake(MOTOR_BRAKE_COAST);
-
+  
   while (true) {
 
     //chassis.tank(); // Tank control
@@ -182,10 +182,21 @@ void opcontrol() {
     //when i press r1, it should spin intake
     if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
       clawIntake.move(127);
-    
+      clawOpenClose.move(200)
       else{
       clawIntake.move(0);
+      clawOpenClose.move(0);
       }
+    }
+    if(master.get_digital(E_CONTROLLER_DIGITAL_R2)){
+      clawIntake.move(-127);
+      clawOpenClose.move(-200);
+      else{
+        clawIntake.move(0);
+        clawOpenClose.move(0);
+      }
+    }
+        
     }
     if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
       toggle.move(50);
