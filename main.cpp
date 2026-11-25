@@ -191,6 +191,16 @@ void opcontrol() {
     } 
     if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
       lift.move(110);
+      else{
+        lift.move(0);
+      }
+    }
+    if master.get_digital(pros::E_CONTROLLER_DIGITAL_A)){
+      lift.move(-100);
+      else{
+        lift.move(0)
+        }
+    }
     }
    }
   pros::delay(ez::util::DELAY_TIME); // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
