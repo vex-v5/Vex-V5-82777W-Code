@@ -200,11 +200,14 @@ void opcontrol() {
         lift.move(0);
       }
     }
-    if master.get_digital(pros::E_CONTROLLER_DIGITAL_A)){
+    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_A)){
       lift.move(-100);
       else{
         lift.move(0)
         }
+    }
+    if (Controller1.Axis3.position() > 0) {
+    Drivetrain.drive(position());
     }
     }
    }
