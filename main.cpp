@@ -21,11 +21,11 @@ pros::Controller master(pros::E_CONTROLLER_MASTER);
 Drive chassis (
   // Left Chassis Ports (negative port will reverse it!)
   //   the first port is the sensored port (when trackers are not used!)
-  {-15, -16}
+  {-1, -14}
 
   // Right Chassis Ports (negative port will reverse it!)
   //   the first port is the sensored port (when trackers are not used!)
-  ,{6, 5}
+  ,{7, 10}
 
   // IMU Port
   ,20
@@ -171,7 +171,7 @@ void opcontrol() {
   while (true) {
 
     //chassis.tank(); // Tank control
-    chassis.arcade_standard(ez::SPLIT); // Standard split arcade
+    //chassis.arcade_standard(ez::SPLIT); // Standard split arcade
     // chassis.arcade_standard(ez::SINGLE); // Standard single arcade
     // chassis.arcade_flipped(ez::SPLIT); // Flipped split arcade
     // chassis.arcade_flipped(ez::SINGLE); // Flipped single arcade
@@ -179,47 +179,41 @@ void opcontrol() {
     // . . .
     // Put more user control code here!
     // . . .
-    //when i press r1, it should spin intake
-    if(master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)){
+    // R1 runs the intake forward; R2 reverses it.
+    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
       clawIntake.move(127);
-      clawOpenClose.move(200)
-      else{
+      clawOpenClose.move(127);
+    } else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
+      clawIntake.move(-127);
+      clawOpenClose.move(-127);
+    } else {
       clawIntake.move(0);
       clawOpenClose.move(0);
-      }
     }
-    if(master.get_digital(E_CONTROLLER_DIGITAL_R2)){
-      clawIntake.move(-127);
-      clawOpenClose.move(-200);
-      else{
-        clawIntake.move(0);
-        clawOpenClose.move(0);
-      }
-    }
-        
-    }
-    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)){
+
+    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
       toggle.move(50);
-    
-      else{
-        toggle.move(0);
-      }
-    } 
-    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)){
+    } else {
+      toggle.move(0);
+    }
+
+    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_L2)) {
       lift.move(110);
-      else{
-        lift.move(0);
-      }
-    }
-    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_A)){
+    } else if (master.get_digital(pros::E_CONTROLLER_DIGITAL_A)) {
       lift.move(-100);
-      else{
-        lift.move(0)
-        }
+    } else {
+      lift.move(0);
     }
-    Drivetrain.drive(Controller1.Axis3.position());
-    Drivetrain.turn(Controller1.Axis4.position());
-    }
-   }
-  pros::delay(ez::util::DELAY_TIME); // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
+
+    master.print(0, 0, "R1:%d R2:%d", master.get_digital(pros::E_CONTROLLER_DIGITAL_R1),
+             master.get_digital(pros::E_CONTROLLER_DIGITAL_R2));
+    master.print(1, 0, "L1:%d L2:%d", master.get_digital(pros::E_CONTROLLER_DIGITAL_L1),
+             master.get_digital(pros::E_CONTROLLER_DIGITAL_L2));
+    master.print(2, 0, "A:%d", master.get_digital(pros::E_CONTROLLER_DIGITAL_A));
+
+    pros::delay(ez::util::DELAY_TIME); // This is used for timer calculations!
+
+    //chassis.move(Controller1.Axis3.position());
+    //chassis.turn(Controller1.Axis4.position());
+  }
 }
