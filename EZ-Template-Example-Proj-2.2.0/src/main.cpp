@@ -21,7 +21,7 @@ pros::Controller master(pros::E_CONTROLLER_MASTER);
 Drive chassis (
   // Left Chassis Ports (negative port will reverse it!)
   //   the first port is the sensored port (when trackers are not used!)
-  {-1, -14}
+  {1, 14}
 
   // Right Chassis Ports (negative port will reverse it!)
   //   the first port is the sensored port (when trackers are not used!)
@@ -145,7 +145,6 @@ void autonomous() {
   chassis.reset_gyro(); // Reset gyro position to 0
   chassis.reset_drive_sensor(); // Reset drive sensors to 0
   chassis.set_drive_brake(MOTOR_BRAKE_HOLD); // Set motors to hold.  This helps autonomous consistency.
-
   ez::as::auton_selector.call_selected_auton(); // Calls selected auton from autonomous selector.
 }
 
@@ -172,7 +171,7 @@ void opcontrol() {
 
     //chassis.tank(); // Tank control
     //chassis.arcade_standard(ez::SPLIT); // Standard split arcade
-    // chassis.arcade_standard(ez::SINGLE); // Standard single arcade
+    chassis.arcade_standard(ez::SINGLE); // Standard single arcade
     // chassis.arcade_flipped(ez::SPLIT); // Flipped split arcade
     // chassis.arcade_flipped(ez::SINGLE); // Flipped single arcade
 
@@ -180,7 +179,7 @@ void opcontrol() {
     // Put more user control code here!
     // . . .
     // R1 runs the intake forward; R2 reverses it.
-    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
+    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
       clawIntake.move(127);
       clawOpenClose.move(127);
     }
@@ -188,7 +187,7 @@ void opcontrol() {
       clawIntake.move(0);
       clawOpenClose.move(0);
     }
-    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
+    if (master.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
       clawIntake.move(-127);
       clawOpenClose.move(-127);
     } else {
@@ -222,7 +221,7 @@ void opcontrol() {
 
     pros::delay(ez::util::DELAY_TIME); // This is used for timer calculations!
 
-    chassis.move(Controller1.Axis3.position());
-    chassis.turn(Controller1.Axis4.position());
+    //chassis.move(Controller1.Axis3.position());
+    //chassis.turn(Controller1.Axis4.position());
   }
 }
